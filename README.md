@@ -56,3 +56,11 @@ class MyPage(PeriodicReviewMixin, Page):
     # Add the periodic review panels to the settings panels
     settings_panels = PeriodicReviewMixin.review_panels + Page.settings_panels
 ```
+
+
+## Contributing
+
+To work on this repository locally:
+
+* install: `poetry install`
+* run tests: `poetry run python runtests.py`

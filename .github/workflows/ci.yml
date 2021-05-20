@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  poetry-version: 1.1.6
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -20,3 +23,91 @@ jobs:
       - uses: pre-commit/action@v2.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python-version: "3.9"
+            django-version: "2.2.23"
+            wagtail-version: "2.11.7"
+          - python-version: "3.9"
+            django-version: "3.1.11"
+            wagtail-version: "2.11.7"
+          - python-version: "3.6"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.7"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.8"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.9"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache Poetry virtual env
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: ${{ runner.os }}-python-${{ matrix.python-version }}-django-${{ matrix.django-version }}-wagtail-${{ matrix.wagtail-version}}-${{ hashFiles('pyproject.toml') }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ env.poetry-version }}
+      - name: Install Python packages
+        run: |
+          poetry add django==${{ matrix.django-version }} wagtail==${{ matrix.wagtail-version }}
+          poetry config virtualenvs.in-project true
+          poetry install
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build, lint]
+    strategy:
+      matrix:
+        include:
+          - python-version: "3.9"
+            django-version: "2.2.23"
+            wagtail-version: "2.11.7"
+          - python-version: "3.9"
+            django-version: "3.1.11"
+            wagtail-version: "2.11.7"
+          - python-version: "3.6"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.7"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.8"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+          - python-version: "3.9"
+            django-version: "3.2"
+            wagtail-version: "2.13"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache Poetry virtual env
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: ${{ runner.os }}-python-${{ matrix.python-version }}-django-${{ matrix.django-version }}-wagtail-${{ matrix.wagtail-version}}-${{ hashFiles('pyproject.toml') }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ env.poetry-version }}
+      - name: Test
+        run: |
+          poetry run python -m django --version
+          poetry run python runtests.py
