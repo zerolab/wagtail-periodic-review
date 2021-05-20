@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import F, Q
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
@@ -15,19 +15,39 @@ def add_review_date_annotations(queryset):
     if queryset.model is not Page:
         return queryset
 
-    last_review_date_fields = []
-    next_review_date_fields = []
-    for model in get_periodic_review_models():
-        last_review_date_fields.append(f"{model.__name__.lower()}__last_review_date")
-        next_review_date_fields.append(f"{model.__name__.lower()}__next_review_date")
+    models = get_periodic_review_models()
+
+    if not models:
+        return queryset
+
+    if len(models) < 2:
+        last_review_date_annotation = F(
+            f"{models[0].__name__.lower()}__last_review_date"
+        )
+        next_review_date_annotation = F(
+            f"{models[0].__name__.lower()}__next_review_date"
+        )
+    else:
+        last_review_date_fields = []
+        next_review_date_fields = []
+        for model in models:
+            last_review_date_fields.append(
+                f"{model.__name__.lower()}__last_review_date"
+            )
+            next_review_date_fields.append(
+                f"{model.__name__.lower()}__next_review_date"
+            )
+
+        last_review_date_annotation = Coalesce(*last_review_date_fields)
+        next_review_date_annotation = Coalesce(*next_review_date_fields)
 
     return queryset.annotate(
-        last_review_date=Coalesce(*last_review_date_fields),
-        next_review_date=Coalesce(*next_review_date_fields),
+        last_review_date=last_review_date_annotation,
+        next_review_date=next_review_date_annotation,
     )
 
 
-def filter_accross_subtypes(queryset, **filters):
+def filter_across_subtypes(queryset, **filters):
     if queryset.model is Page:
         q = Q()
         for page_type in get_periodic_review_models():
@@ -43,7 +63,7 @@ def filter_accross_subtypes(queryset, **filters):
 
 def review_overdue(queryset):
     month_start = timezone.now().date().replace(day=1)
-    queryset = filter_accross_subtypes(
+    queryset = filter_across_subtypes(
         queryset, next_review_date__isnull=False, next_review_date__lt=month_start
     )
     return add_review_date_annotations(queryset).order_by("-next_review_date")
@@ -51,7 +71,7 @@ def review_overdue(queryset):
 
 def for_review_this_month(queryset):
     today = timezone.now().date()
-    queryset = filter_accross_subtypes(
+    queryset = filter_across_subtypes(
         queryset,
         next_review_date__isnull=False,
         next_review_date__year=today.year,
