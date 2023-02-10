@@ -1,0 +1,6 @@
+[flake8]
+max-line-length=88
+exclude=migrations,dist,build,venv,.git,.tox,.venv,__pycache__
+# E501: Line too long
+# W503: line break before binary operator (superseded by W504 line break after binary operator)
+extend-ignore = E501,W503
