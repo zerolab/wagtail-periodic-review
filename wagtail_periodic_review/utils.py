@@ -1,7 +1,6 @@
 from django.db.models import Q
 from django.db.models.functions import Coalesce
 from django.utils import timezone
-
 from wagtail.core.models import Page, get_page_models
 
 

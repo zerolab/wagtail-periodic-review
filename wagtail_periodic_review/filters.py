@@ -1,10 +1,9 @@
+import django_filters
+
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import capfirst
-
 from wagtail.admin.filters import DateRangePickerWidget, WagtailFilterSet
 from wagtail.core.models import Page
-
-import django_filters
 
 from wagtail_periodic_review.utils import get_periodic_review_models
 

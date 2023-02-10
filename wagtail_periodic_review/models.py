@@ -1,16 +1,14 @@
+from dateutil.relativedelta import relativedelta
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
-
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
 from wagtail.search import index
-
-from dateutil.relativedelta import relativedelta
-from modelcluster.fields import ParentalKey
-from modelcluster.models import ClusterableModel
 
 from wagtail_periodic_review.utils import get_periodic_review_models
 from wagtail_periodic_review.widgets import PeriodicReviewContentTypeSelect
@@ -180,7 +178,6 @@ class PeriodicReviewFrequencyRule(Orderable):
 
 @register_setting
 class PeriodicReviewFrequencySettings(ClusterableModel, BaseSetting):
-
     panels = [InlinePanel("frequency_rules")]
 
     def clean_frequency_rules(self):

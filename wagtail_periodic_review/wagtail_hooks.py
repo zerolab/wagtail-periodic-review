@@ -1,6 +1,5 @@
 from django.template.loader import render_to_string
 from django.urls import path, reverse
-
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 from wagtail.core.models import UserPagePermissionsProxy

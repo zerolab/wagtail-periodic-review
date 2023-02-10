@@ -52,7 +52,6 @@ from wagtail_periodic_review.models import PeriodicReviewMixin
 
 
 class MyPage(PeriodicReviewMixin, Page):
-
     # Add the periodic review panels to the settings panels
     settings_panels = PeriodicReviewMixin.review_panels + Page.settings_panels
 ```
