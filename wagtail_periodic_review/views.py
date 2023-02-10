@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from wagtail.admin.views.reports import ReportView
 from wagtail.models import Page
 
@@ -6,7 +7,7 @@ from .utils import add_review_date_annotations, filter_accross_subtypes
 
 
 class PeriodicReviewContentReport(ReportView):
-    title = "Periodic review content"
+    title = _("Periodic review content")
     header_icon = "doc-empty-inverse"
     template_name = "reports/periodic_review_report.html"
     filterset_class = PeriodicReviewFilterSet

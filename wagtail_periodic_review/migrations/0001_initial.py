@@ -37,8 +37,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 "abstract": False,
-                "verbose_name": "Periodic review frequency",
-                "verbose_name_plural": "Periodic review frequencies",
+                "verbose_name": "periodic review frequency",
+                "verbose_name_plural": "periodic review frequencies",
             },
         ),
         migrations.CreateModel(

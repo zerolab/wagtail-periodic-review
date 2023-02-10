@@ -15,15 +15,15 @@ from .widgets import PeriodicReviewContentTypeSelect
 
 
 class ReviewFrequencyChoices(models.IntegerChoices):
-    ONE_MONTH = 1, "1 month"
-    TWO_MONTHS = 2, "2 months"
-    THREE_MONTHS = 3, "3 months"
-    SIX_MONTHS = 6, "6 months"
-    TWELVE_MONTHS = 12, "12 months"
-    EIGHTEEN_MONTHS = 18, "18 months"
-    TWO_YEARS = 24, "2 years"
-    THREE_YEARS = 36, "3 years"
-    FOUR_YEARS = 48, "4 years"
+    ONE_MONTH = 1, _("1 month")
+    TWO_MONTHS = 2, _("2 months")
+    THREE_MONTHS = 3, _("3 months")
+    SIX_MONTHS = 6, _("6 months")
+    TWELVE_MONTHS = 12, _("12 months")
+    EIGHTEEN_MONTHS = 18, _("18 months")
+    TWO_YEARS = 24, _("2 years")
+    THREE_YEARS = 36, _("3 years")
+    FOUR_YEARS = 48, _("4 years")
 
 
 class PeriodicReviewMixin(models.Model):
@@ -220,5 +220,5 @@ class PeriodicReviewFrequencySettings(ClusterableModel, BaseSiteSetting):
         self.recalculate_next_review_dates()
 
     class Meta:
-        verbose_name = "Periodic review frequency"
-        verbose_name_plural = "Periodic review frequencies"
+        verbose_name = _("periodic review frequency")
+        verbose_name_plural = _("periodic review frequencies")

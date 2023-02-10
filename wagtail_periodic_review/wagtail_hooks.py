@@ -1,6 +1,7 @@
 from typing import Any, Mapping
 
 from django.urls import path, reverse
+from django.utils.translation import gettext as _
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.admin.ui.components import Component
@@ -37,8 +38,8 @@ class BaseHomePanel(Component):
 
 
 class OverdueReviewsPanel(BaseHomePanel):
-    heading = "Content review overdue"
-    description = "The following pages are overdue a review, but are still live."
+    heading = _("Content review overdue")
+    description = _("The following pages are overdue a review, but are still live.")
     description_css_class = "help-critical"
     order = 200
 
@@ -48,8 +49,8 @@ class OverdueReviewsPanel(BaseHomePanel):
 
 
 class ForReviewThisMonthPanel(BaseHomePanel):
-    heading = "For review this month"
-    description = "The following live pages are due a review this month."
+    heading = _("For review this month")
+    description = _("The following live pages are due a review this month.")
     description_css_class = "help-warning"
     order = 201
 
@@ -67,7 +68,7 @@ def add_review_panels(request, panels):
 @hooks.register("register_reports_menu_item")
 def register_report_menu_item():
     return MenuItem(
-        "Periodic review content",
+        _("Periodic review content"),
         reverse("wagtail_periodic_review_report"),
         icon_name=PeriodicReviewContentReport.header_icon,
         order=800,
