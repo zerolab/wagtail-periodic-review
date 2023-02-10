@@ -14,6 +14,7 @@ from .views import PeriodicReviewContentReport
 class BaseHomePanel(Component):
     heading = ""
     description = ""
+    description_icon = "info-circle"
     description_css_class = "help-info"
     template_name = "wagtailadmin/periodic_review/home_panel.html"
 
@@ -30,6 +31,7 @@ class BaseHomePanel(Component):
                 "request": self.request,
                 "heading": self.heading,
                 "description": self.description,
+                "description_icon": self.description_icon,
                 "description_css_class": self.description_css_class,
                 "page_list": self.get_page_list(),
             }
@@ -41,6 +43,7 @@ class OverdueReviewsPanel(BaseHomePanel):
     heading = _("Content review overdue")
     description = _("The following pages are overdue a review, but are still live.")
     description_css_class = "help-critical"
+    description_icon = "warning"
     order = 200
 
     def get_page_list(self):
@@ -52,6 +55,7 @@ class ForReviewThisMonthPanel(BaseHomePanel):
     heading = _("For review this month")
     description = _("The following live pages are due a review this month.")
     description_css_class = "help-warning"
+    description_icon = "help"
     order = 201
 
     def get_page_list(self):
