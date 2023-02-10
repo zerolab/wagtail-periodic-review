@@ -52,7 +52,7 @@ exclude = [
     "*.json",
     "*.ini",
     "*.yml",
-    "testmanage.py",
+    "manage.py",
 ]
 
 [tool.black]
