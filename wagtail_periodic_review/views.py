@@ -1,11 +1,8 @@
 from wagtail.admin.views.reports import ReportView
-from wagtail.core.models import Page
+from wagtail.models import Page
 
-from wagtail_periodic_review.filters import PeriodicReviewFilterSet
-from wagtail_periodic_review.utils import (
-    add_review_date_annotations,
-    filter_accross_subtypes,
-)
+from .filters import PeriodicReviewFilterSet
+from .utils import add_review_date_annotations, filter_accross_subtypes
 
 
 class PeriodicReviewContentReport(ReportView):

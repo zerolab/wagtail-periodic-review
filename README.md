@@ -47,7 +47,7 @@ $ ./manage.py migrate
 Add the `PeriodicReviewMixin` to your Page models:
 
 ```python
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail_periodic_review.models import PeriodicReviewMixin
 
 

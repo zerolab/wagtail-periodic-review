@@ -2,16 +2,16 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Orderable
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.models import Orderable
 from wagtail.search import index
 
-from wagtail_periodic_review.utils import get_periodic_review_models
-from wagtail_periodic_review.widgets import PeriodicReviewContentTypeSelect
+from .utils import get_periodic_review_models
+from .widgets import PeriodicReviewContentTypeSelect
 
 
 class ReviewFrequencyChoices(models.IntegerChoices):
@@ -83,8 +83,7 @@ class PeriodicReviewMixin(models.Model):
         return obj
 
     def get_review_frequency_rule(self):
-        url_parts = self.get_url_parts()
-        if url_parts:
+        if url_parts := self.get_url_parts():
             return PeriodicReviewFrequencyRule.objects.filter(
                 sitesettings__site_id=url_parts[0],
                 content_type=self.cached_content_type,
@@ -93,8 +92,7 @@ class PeriodicReviewMixin(models.Model):
     def get_review_frequency(self):
         if self.custom_review_frequency:
             return self.custom_review_frequency
-        rule = self.get_review_frequency_rule()
-        if rule:
+        if rule := self.get_review_frequency_rule():
             return rule.frequency
         return ReviewFrequencyChoices.TWELVE_MONTHS
 
@@ -177,7 +175,7 @@ class PeriodicReviewFrequencyRule(Orderable):
 
 
 @register_setting
-class PeriodicReviewFrequencySettings(ClusterableModel, BaseSetting):
+class PeriodicReviewFrequencySettings(ClusterableModel, BaseSiteSetting):
     panels = [InlinePanel("frequency_rules")]
 
     def clean_frequency_rules(self):
@@ -213,8 +211,8 @@ class PeriodicReviewFrequencySettings(ClusterableModel, BaseSetting):
         """
         # TODO: Reorder types in such a way that multiple non-abstract models in the same
         # inheritance chain are processed in 'least -> most specific' order.
-        for obj in self.frequency_rules.all():
-            obj.set_next_review_dates(site=self.site)
+        for rule in self.frequency_rules.all():
+            rule.set_next_review_dates(site=self.site)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

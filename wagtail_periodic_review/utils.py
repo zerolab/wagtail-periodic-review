@@ -1,11 +1,11 @@
 from django.db.models import Q
 from django.db.models.functions import Coalesce
 from django.utils import timezone
-from wagtail.core.models import Page, get_page_models
+from wagtail.models import Page, get_page_models
 
 
 def get_periodic_review_models():
-    from wagtail_periodic_review.models import PeriodicReviewMixin
+    from .models import PeriodicReviewMixin
 
     return [m for m in get_page_models() if issubclass(m, PeriodicReviewMixin)]
 

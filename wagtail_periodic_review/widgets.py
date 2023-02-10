@@ -3,7 +3,7 @@ from django.forms import Select
 from django.forms.models import ModelChoiceIterator
 from django.utils.functional import cached_property
 
-from wagtail_periodic_review.utils import get_periodic_review_models
+from .utils import get_periodic_review_models
 
 
 class PeriodicReviewContentTypeSelect(Select):
