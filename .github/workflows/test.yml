@@ -87,6 +87,7 @@ jobs:
           name: coverage-data
           path: .coverage.*
           if-no-files-found: ignore
+          retention-days: 1
 
   coverage:
     runs-on: ubuntu-latest
@@ -121,6 +122,8 @@ jobs:
           python -Im coverage combine
           python -Im coverage html --skip-covered --skip-empty
           python -Im coverage report
+          echo "## Coverage summary" >> $GITHUB_STEP_SUMMARY
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
       - name: Upload HTML report if check failed.
         uses: actions/upload-artifact@v3
         with:
