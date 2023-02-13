@@ -32,7 +32,7 @@ def add_review_date_annotations(queryset):
     )
 
 
-def filter_accross_subtypes(queryset, **filters):
+def filter_across_subtypes(queryset, **filters):
     if queryset.model is Page:
         q = Q()
         for page_type in get_periodic_review_models():
@@ -48,7 +48,7 @@ def filter_accross_subtypes(queryset, **filters):
 
 def review_overdue(queryset):
     month_start = timezone.now().date().replace(day=1)
-    queryset = filter_accross_subtypes(
+    queryset = filter_across_subtypes(
         queryset, next_review_date__isnull=False, next_review_date__lt=month_start
     )
     return add_review_date_annotations(queryset).order_by("-next_review_date")
@@ -56,7 +56,7 @@ def review_overdue(queryset):
 
 def for_review_this_month(queryset):
     today = timezone.now().date()
-    queryset = filter_accross_subtypes(
+    queryset = filter_across_subtypes(
         queryset,
         next_review_date__isnull=False,
         next_review_date__year=today.year,

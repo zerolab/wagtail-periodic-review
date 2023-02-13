@@ -3,7 +3,7 @@ from wagtail.admin.views.reports import ReportView
 from wagtail.models import Page
 
 from .filters import PeriodicReviewFilterSet
-from .utils import add_review_date_annotations, filter_accross_subtypes
+from .utils import add_review_date_annotations, filter_across_subtypes
 
 
 class PeriodicReviewContentReport(ReportView):
@@ -13,7 +13,7 @@ class PeriodicReviewContentReport(ReportView):
     filterset_class = PeriodicReviewFilterSet
 
     def get_queryset(self):
-        queryset = filter_accross_subtypes(
+        queryset = filter_across_subtypes(
             Page.objects.all(), last_review_date__isnull=False
         )
         return add_review_date_annotations(queryset).order_by("next_review_date")
