@@ -88,3 +88,11 @@ def register_report_url():
             name="wagtail_periodic_review_report",
         )
     ]
+
+
+@hooks.register("register_icons")
+def register_icons(icons):
+    return icons + [
+        # icon id "icon-wpr-calendar-stats"
+        "wagtail_periodic_review/icons/calendar-stats.svg",
+    ]

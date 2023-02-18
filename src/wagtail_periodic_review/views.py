@@ -8,7 +8,7 @@ from .utils import add_review_date_annotations, filter_across_subtypes
 
 class PeriodicReviewContentReport(ReportView):
     title = _("Periodic review content")
-    header_icon = "doc-empty-inverse"
+    header_icon = "wpr-calendar-stats"
     template_name = "reports/periodic_review_report.html"
     filterset_class = PeriodicReviewFilterSet
 
