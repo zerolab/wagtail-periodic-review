@@ -48,7 +48,7 @@ class OverdueReviewsPanel(BaseHomePanel):
 
     def get_page_list(self):
         all_pages = super().get_page_list()
-        return review_overdue(all_pages.live())[:20]
+        return review_overdue(all_pages.live())[:10]
 
 
 class ForReviewThisMonthPanel(BaseHomePanel):
@@ -60,7 +60,7 @@ class ForReviewThisMonthPanel(BaseHomePanel):
 
     def get_page_list(self):
         all_pages = super().get_page_list()
-        return for_review_this_month(all_pages.live())
+        return for_review_this_month(all_pages.live())[:10]
 
 
 @hooks.register("construct_homepage_panels")
