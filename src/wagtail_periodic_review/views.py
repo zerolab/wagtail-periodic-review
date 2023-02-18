@@ -1,3 +1,4 @@
+from django.core.exceptions import FieldError
 from django.utils.translation import gettext as _
 from wagtail.admin.views.reports import ReportView
 from wagtail.models import Page
@@ -16,4 +17,7 @@ class PeriodicReviewContentReport(ReportView):
         queryset = filter_across_subtypes(
             Page.objects.all(), last_review_date__isnull=False
         )
-        return add_review_date_annotations(queryset).order_by("next_review_date")
+        try:
+            return add_review_date_annotations(queryset).order_by("next_review_date")
+        except FieldError:
+            return queryset
