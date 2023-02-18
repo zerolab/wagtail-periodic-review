@@ -1,3 +1,4 @@
+from django.core.exceptions import FieldError
 from django.db.models import F, Q
 from django.db.models.functions import Coalesce
 from django.utils import timezone
@@ -14,9 +15,12 @@ def add_review_date_annotations(queryset):
     if queryset.model is not Page:
         return queryset
 
+    if not (periodic_review_models := get_periodic_review_models()):
+        return queryset
+
     last_review_date_fields = []
     next_review_date_fields = []
-    for model in get_periodic_review_models():
+    for model in periodic_review_models:
         last_review_date_fields.append(f"{model.__name__.lower()}__last_review_date")
         next_review_date_fields.append(f"{model.__name__.lower()}__next_review_date")
 
@@ -33,17 +37,21 @@ def add_review_date_annotations(queryset):
 
 
 def filter_across_subtypes(queryset, **filters):
-    if queryset.model is Page:
-        q = Q()
-        for page_type in get_periodic_review_models():
-            q |= Q(
-                **{
-                    f"{page_type.__name__.lower()}__{key}": value
-                    for key, value in filters.items()
-                }
-            )
-        return queryset.filter(q)
-    return queryset.filter(**filters)
+    if queryset.model is not Page:
+        return queryset
+
+    if not (periodic_review_models := get_periodic_review_models()):
+        return queryset.none()
+
+    q = Q()
+    for page_type in periodic_review_models:
+        q |= Q(
+            **{
+                f"{page_type.__name__.lower()}__{key}": value
+                for key, value in filters.items()
+            }
+        )
+    return queryset.filter(q)
 
 
 def review_overdue(queryset):
@@ -51,7 +59,10 @@ def review_overdue(queryset):
     queryset = filter_across_subtypes(
         queryset, next_review_date__isnull=False, next_review_date__lt=month_start
     )
-    return add_review_date_annotations(queryset).order_by("-next_review_date")
+    try:
+        return add_review_date_annotations(queryset).order_by("-next_review_date")
+    except FieldError:
+        return queryset
 
 
 def for_review_this_month(queryset):
@@ -62,4 +73,7 @@ def for_review_this_month(queryset):
         next_review_date__year=today.year,
         next_review_date__month=today.month,
     )
-    return add_review_date_annotations(queryset).order_by("next_review_date")
+    try:
+        return add_review_date_annotations(queryset).order_by("next_review_date")
+    except FieldError:
+        return queryset
