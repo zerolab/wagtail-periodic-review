@@ -22,7 +22,7 @@ class BaseHomePanel(Component):
         self.request = request
 
     def get_page_list(self):
-        return UserPagePermissionsProxy(self.request.user).publishable_pages()
+        return UserPagePermissionsProxy(self.request.user).editable_pages()
 
     def get_context_data(self, parent_context: Mapping[str, Any]) -> Mapping[str, Any]:
         context = super().get_context_data(parent_context)
