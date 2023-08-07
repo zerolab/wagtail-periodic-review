@@ -73,6 +73,18 @@ class PeriodicReviewMixin(models.Model):
         index.FilterField("custom_review_frequency"),
     ]
 
+    def save(self, *args, **kwargs):
+        """
+        Overrides Page.save() to recalculate ``next_review_date`` whenever
+        ``last_review_date`` is updated.
+        """
+        if (
+            "update_fields" not in kwargs
+            or "last_review_date" in kwargs["update_fields"]
+        ):
+            self.next_review_date = self.calculate_next_review_date()
+        super().save(*args, **kwargs)
+
     def with_content_json(self, content_json):
         """
         Overrides Page.with_content_json() to preserve additional
@@ -101,18 +113,6 @@ class PeriodicReviewMixin(models.Model):
             return self.last_review_date + relativedelta(
                 months=self.get_review_frequency()
             )
-
-    def save(self, *args, **kwargs):
-        """
-        Overrides Page.save() to recalculate ``next_review_date`` whenever
-        ``last_review_date`` is updated.
-        """
-        if (
-            "update_fields" not in kwargs
-            or "last_review_date" in kwargs["update_fields"]
-        ):
-            self.next_review_date = self.calculate_next_review_date()
-        super().save(*args, **kwargs)
 
 
 class PeriodicReviewFrequencyRule(Orderable):
