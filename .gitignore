@@ -76,3 +76,4 @@ venv.bak/
 dmypy.json
 
 poetry.lock
+.ruff_cache
