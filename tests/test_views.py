@@ -1,15 +1,16 @@
 from unittest import mock
 
 from dateutil.relativedelta import relativedelta
+from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-from wagtail.admin.tests.api.utils import AdminAPITestCase
 from wagtail.models import Site
+from wagtail.test.utils import WagtailTestUtils
 
 from tests.models import NonPageModel, ReviewedPage, SimplePage
 
 
-class DashboardPanelsTest(AdminAPITestCase):
+class DashboardPanelsTest(WagtailTestUtils, TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.root_page = Site.objects.get(is_default_site=True).root_page
@@ -22,6 +23,10 @@ class DashboardPanelsTest(AdminAPITestCase):
 
         cls.page_overdue_title = "The Overdue Page"
         cls.page_soon_title = "The Soon Page"
+
+    def setUp(self):
+        super().setUp()
+        self.user = self.login()
 
     def add_overdue_page(self):
         # Note: the default review period is 12 months
@@ -93,7 +98,7 @@ class DashboardPanelsTest(AdminAPITestCase):
         self.assertNotContains(response, self.page_soon.title)
 
 
-class PeriodicReviewReportTest(AdminAPITestCase):
+class PeriodicReviewReportTest(WagtailTestUtils, TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.report_url = reverse("wagtail_periodic_review_report")
@@ -125,6 +130,10 @@ class PeriodicReviewReportTest(AdminAPITestCase):
         cls.root_page.add_child(instance=cls.regular_page)
 
         cls.non_page_model = NonPageModel.objects.create(name="Non-page model")
+
+    def setUp(self):
+        super().setUp()
+        self.user = self.login()
 
     def test_report(self):
         response = self.client.get(self.report_url)
