@@ -1,16 +1,10 @@
 from django.core.exceptions import FieldError
 from django.utils.translation import gettext as _
-from wagtail import VERSION as WAGTAIL_VERSION
 from wagtail.admin.views.reports import ReportView
+from wagtail.permission_policies.pages import PagePermissionPolicy
 
 from .filters import PeriodicReviewFilterSet
 from .utils import add_review_date_annotations, filter_across_subtypes
-
-
-if WAGTAIL_VERSION >= (5, 1):
-    from wagtail.permission_policies.pages import PagePermissionPolicy
-else:
-    from wagtail.models import UserPagePermissionsProxy
 
 
 class PeriodicReviewContentReport(ReportView):
@@ -20,11 +14,9 @@ class PeriodicReviewContentReport(ReportView):
     filterset_class = PeriodicReviewFilterSet
 
     def _get_editable_pages(self):
-        if WAGTAIL_VERSION >= (5, 1):
-            return PagePermissionPolicy().instances_user_has_permission_for(
-                self.request.user, "change"
-            )
-        return UserPagePermissionsProxy(self.request.user).editable_pages()
+        return PagePermissionPolicy().instances_user_has_permission_for(
+            self.request.user, "change"
+        )
 
     def get_queryset(self):
         queryset = filter_across_subtypes(
