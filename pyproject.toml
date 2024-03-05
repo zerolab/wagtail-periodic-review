@@ -54,6 +54,7 @@ exclude = [
     ".*",
     "*.json",
     "*.ini",
+    "*.sqlite3",
     "*.yml",
     "ruff.toml",
     "manage.py",
