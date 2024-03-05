@@ -2,8 +2,15 @@
 
 ## Unreleased
 
-- Added official Wagtail 6.x support
-- Added Django 5.x support
+## [0.3.0] - 2024-05-05
+
+### Added
+
+- Added official Wagtail 6.x support (@katdom13)
+
+### Changed
+
+- Tidied up tooling: ruff and ruff format, moved
 
 ## [0.2.0] - 2023-08-11
 

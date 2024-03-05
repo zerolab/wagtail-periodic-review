@@ -1,7 +1,7 @@
 [project]
 name = "wagtail-periodic-review"
 description = "A Wagtail package for periodic page content reviews"
-authors = [{name = "Andy Babic ", email = "andy.babic@torchbox.com"}]
+authors = [{name = "Andy Babic", email = "andy.babic@torchbox.com"}]
 maintainers = [{name = "Dan Braghis", email="dan.braghis@torchbox.com"}]
 readme = "README.md"
 license = {file = "LICENSE"}
