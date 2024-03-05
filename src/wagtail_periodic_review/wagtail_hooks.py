@@ -2,19 +2,13 @@ from typing import Any, Mapping
 
 from django.urls import path, reverse
 from django.utils.translation import gettext as _
-from wagtail import VERSION as WAGTAIL_VERSION
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.admin.ui.components import Component
+from wagtail.permission_policies.pages import PagePermissionPolicy
 
 from .utils import for_review_this_month, review_overdue
 from .views import PeriodicReviewContentReport
-
-
-if WAGTAIL_VERSION >= (5, 1):
-    from wagtail.permission_policies.pages import PagePermissionPolicy
-else:
-    from wagtail.models import UserPagePermissionsProxy
 
 
 class BaseHomePanel(Component):
@@ -28,11 +22,9 @@ class BaseHomePanel(Component):
         self.request = request
 
     def get_page_list(self):
-        if WAGTAIL_VERSION >= (5, 1):
-            return PagePermissionPolicy().instances_user_has_permission_for(
-                self.request.user, "change"
-            )
-        return UserPagePermissionsProxy(self.request.user).editable_pages()
+        return PagePermissionPolicy().instances_user_has_permission_for(
+            self.request.user, "change"
+        )
 
     def get_context_data(self, parent_context: Mapping[str, Any]) -> Mapping[str, Any]:
         context = super().get_context_data(parent_context)

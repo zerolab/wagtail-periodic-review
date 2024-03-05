@@ -110,7 +110,7 @@ Now you can run tests as shown below:
 tox
 ```
 
-or, you can run them for a specific environment `tox -e python3.10-django3.2-wagtail4.1` or specific test
-`tox -e python3.10-django3.2-wagtail4.1-sqlite tests.test_file.TestClass.test_method`
+or, you can run them for a specific environment `tox -e python3.12-django5.0-wagtail6.0` or specific test
+`tox -e python3.12-django5.0-wagtail5.2 -- tests.test_file.TestClass.test_method`
 
 To run the test app interactively, use `tox -e interactive`, visit `http://127.0.0.1:8020/admin/` and log in with `admin`/`changeme`.
