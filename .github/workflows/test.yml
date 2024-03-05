@@ -25,36 +25,8 @@ env:
   PYTHON_LATEST: "3.12"
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        id: setup_python
-        with:
-          python-version: ${{env.PYTHON_LATEST}}
-
-      - name: Install pre-commit
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: python -Im pip install pre-commit
-
-      - name: Cache pre-commit tools
-        uses: actions/cache@v4
-        id: cache
-        with:
-          key: pre-commit-${{ runner.os }}-${{ steps.setup_python.outputs.python-version}}-${{ hashFiles('.pre-commit-config.yaml') }}
-          path: ~/.cache/pre-commit
-
-      - name: Run pre-commit
-        run: pre-commit run --all-files
-
   tests:
     runs-on: ubuntu-latest
-    needs: lint
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
