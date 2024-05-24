@@ -31,7 +31,7 @@
                                 {% i18n_enabled as show_locale_labels %}
                                 {% if show_locale_labels and page.locale_id %}
                                     {% locale_label_from_id page.locale_id as locale_label %}
-                                    <span class="status-tag status-tag--label">{{ locale_label }}</span>
+                                    <span class="w-status w-status--label">{{ locale_label }}</span>
                                 {% endif %}
                                 {% include "wagtailadmin/pages/listing/_privacy_indicator.html" with page=page %}
                                 {% include "wagtailadmin/pages/listing/_locked_indicator.html" with page=page %}
