@@ -2,9 +2,11 @@
 
 ## Unreleased
 
+## [0.3.1] - 2024-06-18
+
 ### Removed
 
-- Removed support for Django < 4.2 (@katdom13)
+- Removed official support for Django < 4.2 (@katdom13)
 
 ## [0.3.0] - 2024-05-05
 
