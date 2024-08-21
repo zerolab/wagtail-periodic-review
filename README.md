@@ -74,8 +74,8 @@ With your preferred virtualenv activated, install testing dependencies:
 #### Using pip
 
 ```sh
-python -m pip install --upgrade pip>=21.3
-python -m pip install -e .[testing] -U
+python -m pip install --upgrade "pip>=21.3"
+python -m pip install -e '.[testing]' -U
 ```
 
 #### Using flit
