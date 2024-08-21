@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "wagtail.documents",
     "wagtail.users",
     "wagtail.admin",
+    "wagtail.sites",
     "wagtail",
     "wagtail.contrib.settings",
     "wagtail_periodic_review",
