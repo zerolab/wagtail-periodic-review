@@ -1,11 +1,12 @@
 from django.core.exceptions import FieldError
 from django.utils.translation import gettext as _
 from wagtail import VERSION as WAGTAIL_VERSION
-from wagtail.admin.views.reports import ReportView
+from wagtail.admin.views.reports import PageReportView
 from wagtail.permission_policies.pages import PagePermissionPolicy
 
 from .filters import PeriodicReviewFilterSet
 from .utils import add_review_date_annotations, filter_across_subtypes
+
 
 def _adapt_wagtail_report_attributes(cls):
     """
@@ -21,6 +22,7 @@ def _adapt_wagtail_report_attributes(cls):
     """
     if WAGTAIL_VERSION < (6, 2):
         cls.title = _("Periodic review content")
+        cls.template_name = "reports/periodic_review_report.html"
     else:
         # The `title` attr was **changed** to `page_title` in Wagtail 6.2
         cls.page_title = _("Periodic review content")
@@ -36,9 +38,9 @@ def _adapt_wagtail_report_attributes(cls):
 
 
 @_adapt_wagtail_report_attributes
-class PeriodicReviewContentReport(ReportView):
+class PeriodicReviewContentReport(PageReportView):
     header_icon = "wpr-calendar-stats"
-    template_name = "reports/periodic_review_report.html"
+
     filterset_class = PeriodicReviewFilterSet
 
     def _get_editable_pages(self):
