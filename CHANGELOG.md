@@ -5,6 +5,9 @@
 ### Added
 
 - Added official Wagtail 6.2 support
+### Removed
+
+- Support for Python 3.8
 
 ## [0.3.1] - 2024-06-18
 
