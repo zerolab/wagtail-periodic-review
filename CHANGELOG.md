@@ -2,9 +2,16 @@
 
 ## Unreleased
 
+## [0.4.0] - 2024-08-22
+
 ### Added
 
-- Added official Wagtail 6.2 support
+- Added official Wagtail 6.2 support (@engineervix)
+
+### Fixed
+
+- Interactive tox env (@engineervix)
+
 ### Removed
 
 - Support for Python 3.8
