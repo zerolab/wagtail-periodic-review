@@ -23,7 +23,8 @@ jobs:
 
       - name: ⬇️ Install build dependencies
         run: |
-          python -Im pip install flit
+          python -m pip install uv --quiet --upgrade
+          python -Im uv pip install flit
           python -Im flit install --symlink
 
       - name: 🏗️ Build

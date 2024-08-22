@@ -1,4 +1,5 @@
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from django.urls import path, reverse
 from django.utils.translation import gettext as _
