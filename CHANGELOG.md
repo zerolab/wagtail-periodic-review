@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added official Wagtail 6.2 support
+
 ## [0.3.1] - 2024-06-18
 
 ### Removed
