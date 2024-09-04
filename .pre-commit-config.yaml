@@ -3,7 +3,8 @@ default_language_version:
   python: python3.12
 
 ci:
-  autoupdate_schedule: monthly
+  autofix_prs: false
+  autoupdate_schedule: quarterly
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
