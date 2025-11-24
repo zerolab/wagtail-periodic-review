@@ -1,6 +1,6 @@
 default_language_version:
   # Keep in sync with test.yml/PYTHON_LATEST
-  python: python3.13
+  python: python3.14
 
 ci:
   autofix_prs: false
@@ -8,7 +8,7 @@ ci:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 'v6.0.0'
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -22,7 +22,7 @@ repos:
       - id: trailing-whitespace
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # keep in sync with .github/workflows/ruff.yml
-    rev: 'v0.12.11'
+    rev: 'v0.14.6'
     hooks:
       - id: ruff
         args: [ --fix ]

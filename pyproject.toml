@@ -20,15 +20,15 @@ classifiers = [
     "Framework :: Wagtail :: 6",
     "Framework :: Wagtail :: 7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 dynamic = ["version"]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "Wagtail>=6.3",
     "python-dateutil>=2.8,<3.0.0"
