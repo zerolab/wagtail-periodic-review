@@ -35,7 +35,7 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/torchbox/wagtail-periodic-review/blob/main/CHANGELOG.md"
+Source = "https://github.com/torchbox/wagtail-periodic-review"
 Changelog = "https://github.com/torchbox/wagtail-periodic-review/blob/main/CHANGELOG.md"
 
 
