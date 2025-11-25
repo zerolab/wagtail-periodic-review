@@ -4,6 +4,7 @@
 
 ### Added
 
+- Added testing for Python 3.14 and Wagtail 7.2
 - Added Support for Wagtail 7.1 (@damwaingames)
 
 ### Changed
