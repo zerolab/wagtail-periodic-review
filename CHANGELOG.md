@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added testing for Wagtail 7.3
+
 ### Added
 
 - Added testing for Python 3.14 and Wagtail 7.2
