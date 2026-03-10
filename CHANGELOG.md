@@ -2,12 +2,15 @@
 
 ## Unreleased
 
-- Added testing for Wagtail 7.3
-
 ### Added
 
+- Added Support for Wagtail 7.3
 - Added testing for Python 3.14 and Wagtail 7.2
 - Added Support for Wagtail 7.1 (@damwaingames)
+
+### Removed
+
+- Support for Django 5.1
 
 ### Changed
 
