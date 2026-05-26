@@ -43,9 +43,9 @@ jobs:
             github.com:443
             pypi.org:443
             api.github.com:443
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: ⬇️ Install dependencies
@@ -62,7 +62,7 @@ jobs:
           tox --installpkg ./dist/*.whl
 
       - name: ⬆️ Upload coverage data
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage.*
@@ -85,8 +85,8 @@ jobs:
             github.com:443
             pypi.org:443
             api.github.com:443
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           # Use latest Python, so it understands all syntax.
           python-version: ${{env.PYTHON_LATEST}}
@@ -94,7 +94,7 @@ jobs:
       - run: python -Im pip install --quiet --upgrade coverage
 
       - name: ⬇️ Download coverage data
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -107,7 +107,7 @@ jobs:
           echo "## Coverage summary" >> $GITHUB_STEP_SUMMARY
           python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
       - name: 📈 Upload HTML report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: html-report
           path: htmlcov
