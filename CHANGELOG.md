@@ -16,6 +16,7 @@
 ### Removed
 
 - Dropped support for Wagtail 6.3 (end of life 1 May 2026); minimum Wagtail is now 7.0
+- Dropped support for Django < 5.2; minimum Django is now 5.2 LTS
 
 ## [0.4.0] - 2024-08-22
 
