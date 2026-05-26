@@ -6,10 +6,16 @@
 
 - Added testing for Python 3.14 and Wagtail 7.2
 - Added Support for Wagtail 7.1 (@damwaingames)
+- Added official support for Wagtail 7.3 and 7.4 LTS
+- Added official support for Django 6.0
 
 ### Changed
 
 - Updated the homepage panels and report listings to include locale labels when internationalization is enabled.
+
+### Removed
+
+- Dropped support for Wagtail 6.3 (end of life 1 May 2026); minimum Wagtail is now 7.0
 
 ## [0.4.0] - 2024-08-22
 
