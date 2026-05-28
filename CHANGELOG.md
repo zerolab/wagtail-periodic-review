@@ -4,9 +4,7 @@
 
 ### Added
 
-- Added testing for Python 3.14 and Wagtail 7.2
-- Added Support for Wagtail 7.1 (@damwaingames)
-- Added official support for Wagtail 7.3, 7.4 LTS and Django 6.0
+- Added official support for Python 3.14, Django 6.0, Wagtail 7.3, 7.4 LTS (@damwaingames, @nickmoreton)
 
 ### Changed
 
