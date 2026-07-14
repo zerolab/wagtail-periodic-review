@@ -4,12 +4,15 @@
 
 ### Added
 
-- Added testing for Python 3.14 and Wagtail 7.2
-- Added Support for Wagtail 7.1 (@damwaingames)
+- Added official support for Python 3.14, Django 6.0, Wagtail 7.3, 7.4 LTS (@damwaingames, @nickmoreton)
 
 ### Changed
 
 - Updated the homepage panels and report listings to include locale labels when internationalization is enabled.
+
+### Removed
+
+- Dropped support for Wagtail < 7.0, Django < 5.2 (@nickmoreton)
 
 ## [0.4.0] - 2024-08-22
 
