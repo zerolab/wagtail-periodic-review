@@ -12,7 +12,6 @@ from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 from wagtail.search import index
 
-from .utils import get_periodic_review_models
 from .widgets import PeriodicReviewContentTypeSelect
 
 
@@ -192,6 +191,9 @@ class PeriodicReviewFrequencySettings(ClusterableModel, BaseSiteSetting):
         Called after saving to ensure rules exist for all subclasses of PeriodicReviewMixin,
         and rules that no longer meet that criteria are deleted.
         """
+        # imported inline to avoid AppRegistryNotReady errors
+        from .utils import get_periodic_review_models
+
         target_models = set(get_periodic_review_models())
         covered_models = set()
 

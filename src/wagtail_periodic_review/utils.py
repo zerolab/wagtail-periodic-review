@@ -4,7 +4,16 @@ from django.core.exceptions import FieldError
 from django.db.models import F, Q
 from django.db.models.functions import Coalesce
 from django.utils import timezone
-from wagtail.models import Page, get_page_models
+from wagtail import VERSION as WAGTAIL_VERSION
+from wagtail.models import get_page_models
+
+
+if WAGTAIL_VERSION >= (8, 0):
+    import swapper
+
+    Page = swapper.load_model("wagtailcore", "Page")
+else:
+    from wagtail.models import Page
 
 
 @cache

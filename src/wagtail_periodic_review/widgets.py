@@ -3,8 +3,6 @@ from django.forms import Select
 from django.forms.models import ModelChoiceIterator
 from django.utils.functional import cached_property
 
-from .utils import get_periodic_review_models
-
 
 class PeriodicReviewContentTypeSelect(Select):
     """
@@ -18,6 +16,9 @@ class PeriodicReviewContentTypeSelect(Select):
 
     @cached_property
     def relevant_object_ids(self):
+        # imported inline to avoid AppRegistryNotReady errors
+        from .utils import get_periodic_review_models
+
         ids = []
         for model in get_periodic_review_models():
             ct = ContentType.objects.get_for_model(model)
