@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING, ClassVar
+
 from dateutil.relativedelta import relativedelta
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -12,6 +14,10 @@ from wagtail.search import index
 
 from .utils import get_periodic_review_models
 from .widgets import PeriodicReviewContentTypeSelect
+
+
+if TYPE_CHECKING:
+    from wagtail.admin.panels import Panel
 
 
 class ReviewFrequencyChoices(models.IntegerChoices):
@@ -52,7 +58,7 @@ class PeriodicReviewMixin(models.Model):
     class Meta:
         abstract = True
 
-    review_panels = [
+    review_panels: ClassVar[list["Panel"]] = [
         MultiFieldPanel(
             heading=_("Periodic review"),
             children=[
@@ -63,7 +69,7 @@ class PeriodicReviewMixin(models.Model):
         )
     ]
 
-    additional_search_fields = [
+    additional_search_fields: ClassVar[list[index.SearchField | index.FilterField]] = [
         index.SearchField("current_version_ref"),
         index.SearchField("current_version_compiled_by"),
         index.FilterField("current_version_ref"),
@@ -101,6 +107,8 @@ class PeriodicReviewMixin(models.Model):
                 content_type=self.cached_content_type,
             ).first()
 
+        return None
+
     def get_review_frequency(self):
         if self.custom_review_frequency:
             return self.custom_review_frequency
@@ -113,6 +121,7 @@ class PeriodicReviewMixin(models.Model):
             return self.last_review_date + relativedelta(
                 months=self.get_review_frequency()
             )
+        return None
 
 
 class PeriodicReviewFrequencyRule(Orderable):
@@ -130,13 +139,13 @@ class PeriodicReviewFrequencyRule(Orderable):
     )
 
     class Meta(Orderable.Meta):
-        constraints = [
+        constraints: ClassVar[list[models.BaseConstraint]] = [
             models.UniqueConstraint(
                 fields=["sitesettings", "content_type"], name="unique_rule"
             )
         ]
 
-    panels = [
+    panels: ClassVar[list["Panel"]] = [
         FieldPanel("content_type", widget=PeriodicReviewContentTypeSelect),
         FieldPanel("frequency"),
     ]
@@ -176,7 +185,7 @@ class PeriodicReviewFrequencyRule(Orderable):
 
 @register_setting
 class PeriodicReviewFrequencySettings(ClusterableModel, BaseSiteSetting):
-    panels = [InlinePanel("frequency_rules")]
+    panels: ClassVar[list["Panel"]] = [InlinePanel("frequency_rules")]
 
     def clean_frequency_rules(self):
         """
