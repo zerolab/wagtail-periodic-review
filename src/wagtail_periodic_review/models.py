@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 from wagtail.search import index
@@ -33,7 +33,7 @@ class ReviewFrequencyChoices(models.IntegerChoices):
 
 class PeriodicReviewMixin(models.Model):
     """
-    A mixin class to be use with page types that require
+    A mixin class to be used with page types that require
     regular reviews for audit or other purposes.
 
     ``next_review_date`` values are set automatically on
@@ -61,14 +61,14 @@ class PeriodicReviewMixin(models.Model):
         MultiFieldPanel(
             heading=_("Periodic review"),
             children=[
-                FieldPanel("last_review_date"),
-                FieldPanel("current_version_ref"),
-                FieldPanel("current_version_compiled_by"),
+                "last_review_date",
+                "current_version_ref",
+                "current_version_compiled_by",
             ],
         )
     ]
 
-    additional_search_fields: ClassVar[list[index.SearchField | index.FilterField]] = [
+    additional_search_fields: ClassVar[list[index.BaseField]] = [
         index.SearchField("current_version_ref"),
         index.SearchField("current_version_compiled_by"),
         index.FilterField("current_version_ref"),
@@ -144,9 +144,9 @@ class PeriodicReviewFrequencyRule(Orderable):
             )
         ]
 
-    panels: ClassVar[list["Panel"]] = [
+    panels: ClassVar[list["Panel | str"]] = [
         FieldPanel("content_type", widget=PeriodicReviewContentTypeSelect),
-        FieldPanel("frequency"),
+        "frequency",
     ]
 
     @property
@@ -174,17 +174,18 @@ class PeriodicReviewFrequencyRule(Orderable):
                 # allow these pages to maintain their own value on save
                 custom_review_frequency__isnull=True,
             )
-            .only("id", "next_review_date")
+            .only("id", "next_review_date", "last_review_date")
         ):
             obj.next_review_date = obj.last_review_date + relativedelta(
                 months=self.frequency
             )
+            to_update.append(obj)
         self.model_class.objects.bulk_update(to_update, ["next_review_date"])
 
 
 @register_setting
 class PeriodicReviewFrequencySettings(ClusterableModel, BaseSiteSetting):
-    panels: ClassVar[list["Panel"]] = [InlinePanel("frequency_rules")]
+    panels: ClassVar[list[str]] = ["frequency_rules"]
 
     def clean_frequency_rules(self):
         """
