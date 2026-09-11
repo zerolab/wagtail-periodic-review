@@ -2,9 +2,18 @@
 
 ## Unreleased
 
+## [0.5.0] - 2026-09-11
+
 ### Added
 
-- Added official support for Python 3.14, Django 6.0, Wagtail 7.3, 7.4 LTS (@damwaingames, @nickmoreton)
+- Added official support for Python 3.14, Django 6.0 and 6.1, Wagtail 7.4 LTS and 8.0 (@damwaingames, @nickmoreton, @zerolab)
+- Added support for Wagtail 8.0 custom base pages (@zerolab)
+
+### Removed
+
+- Support for Python < 3.12 (@zerolab)
+
+## [0.5.0] - 2025-09-01
 
 ### Changed
 
