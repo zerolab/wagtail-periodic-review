@@ -87,8 +87,22 @@ flit install
 
 ### pre-commit
 
-Note that this project uses [pre-commit](https://github.com/pre-commit/pre-commit). To set up locally:
+Note that this project uses [prek](https://prek.j178.dev/) / [pre-commit](https://github.com/pre-commit/pre-commit). To set up locally:
 
+Using prek:
+```shell
+# if you don't have it yet, globally
+$ pip install prek
+# go to the project directory
+$ cd wagtail-periodic-review
+# initialize prek
+$ prek install
+
+# Optional, run all checks once for this, then the checks will run only on the changed files
+$ prek run --all-files
+```
+
+Using pre-commit
 ```shell
 # if you don't have it yet, globally
 $ python -m pip install pre-commit
@@ -109,7 +123,7 @@ Now you can run tests as shown below:
 tox
 ```
 
-or, you can run them for a specific environment `tox -e python3.12-django5.2-wagtail7.1` or specific test
-`tox -e python3.12-django5.2-wagtail7.1 -- tests.test_file.TestClass.test_method`
+or, you can run them for a specific environment `tox -e python3.14-django6.0-wagtail7.4` or specific test
+`tox -e python3.14-django6.0-wagtail7.4 -- tests.test_file.TestClass.test_method`
 
 To run the test app interactively, use `tox -e interactive`, visit `http://127.0.0.1:8020/admin/` and log in with `admin`/`changeme`.

@@ -15,8 +15,10 @@ classifiers = [
     "Framework :: Django",
     "Framework :: Django :: 5.2",
     "Framework :: Django :: 6.0",
+    "Framework :: Django :: 6.1",
     "Framework :: Wagtail",
     "Framework :: Wagtail :: 7",
+    "Framework :: Wagtail :: 8",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -39,7 +41,7 @@ Changelog = "https://github.com/torchbox/wagtail-periodic-review/blob/main/CHANG
 
 
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core >=4.0,<5"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.module]

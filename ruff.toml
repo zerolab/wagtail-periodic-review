@@ -25,6 +25,16 @@ extend-ignore = [
 
 fixable = ["C4", "E", "F", "I", "UP"]
 
+[lint.per-file-ignores]
+"src/wagtail_periodic_review/migrations/**.py" = [
+    "RUF012",  # mutable-class-default
+]
+"tests/**.py" = [
+    "S105",  # hardcoded-password-string
+    "S106",  # hardcoded-password-func-arg
+    "RUF012"  # mutable-class-default
+]
+
 [lint.isort]
 known-first-party = ["src", "wagtail_periodic_review"]
 lines-between-types = 1
